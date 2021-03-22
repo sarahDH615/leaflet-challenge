@@ -17,35 +17,6 @@ function colourCreator(depth) {
         return '#0040ff'
     } else {return '#4000ff'}
 }
-// legend 
-// get colours funct
-// function getColor(d) {
-//     return d == '90+' ? '#4000ff' :
-//            d == '70 - 90'  ? '#0040ff':
-//            d == '50 - 70'  ? '#0080ff' :
-//            d == '30 - 50'  ? '#00bfff' :
-//            d == '10 - 30'   ? '#00ffff' :
-//                             '#00ffbf';
-// };
-
-// creation function
-// function createLegend(map) {
-//     var div = L.DomUtil.create('div', 'info legend');
-//     labels = ['<strong>Earthquake Depth</strong>'],
-//     depth_cats = ['-10 - 10','10 - 30','30 - 50','50 - 70','70 - 90', '90+'];
-//     // colour_cats = ['#00ffbf', '#00ffff', '#00bfff', '#0080ff', '#0040ff', ]
-
-//     for (var i = 0; i < depth_cats.length; i++) {
-
-//             div.innerHTML += 
-//             labels.push(
-//                 '<i class="circle" style="background:' + getColor(depth_cats[i]) + '"></i> ' +
-//             (depth_cats[i] ? depth_cats[i] : '+'));
-
-//         }
-//         div.innerHTML = labels.join('<br>');
-//     return div;
-// }
 
 // map creation
 // centred round Western Canada since many earthquakes seemed to occur there
@@ -73,6 +44,8 @@ function createMap(earthquakeData) {
         var coords = feature.geometry.coordinates;
         var mag = feature.properties.mag;
         var place = feature.properties.place;
+        var time = feature.properties.time;
+        var url = feature.properties.url
         var depth = coords[2];
         L.circle([coords[1], coords[0]], {
             color: "black",
@@ -80,21 +53,22 @@ function createMap(earthquakeData) {
             fillColor: colourCreator(depth),
             fillOpacity: 0.75,
             radius: makeRadius(mag),
-          }).bindPopup("<h1>Place: " + place + "</h1> <hr> <h3>Magnitude: " + mag + "</h3>")
-          .addTo(myMap);  
+        }).bindPopup(
+            "<h3>Earthquake at " + Date(time) + "</h3><hr><h3>Located " + place + "</h3><nl><h3>Magnitude: " + mag + "</h3><nl><h3><a target='_blank' rel='noopener noreferrer' href='" + url + "'</a>Learn More</h3>"
+        )
+        .addTo(myMap);  
     });
     // adding legend
     var legend = L.control({position: 'bottomleft'});
     legend.onAdd = function(myMap) {
         var div = L.DomUtil.create("div", "legend");
-        div.innerHTML += "<h4>Earthquake Depth</h4>";
+        div.innerHTML += "<h4>Earthquake Depth (km)</h4>";
         div.innerHTML += '<i style="background: #00ffbf"></i><span>-10 - 10</span><br>';
         div.innerHTML += '<i style="background: #00ffff"></i><span>10 - 30</span><br>';
         div.innerHTML += '<i style="background: #00bfff"></i><span>30 - 50</span><br>';
         div.innerHTML += '<i style="background: #0080ff"></i><span>50 - 70</span><br>';
         div.innerHTML += '<i style="background: #0040ff"></i><span>70 - 90</span><br>';
         div.innerHTML += '<i style="background: #4000ff"></i><span>90+</span><br>';
-        // div.innerHTML += '<i class="icon" style="background-image: url(https://d30y9cdsu7xlg0.cloudfront.net/png/194515-200.png);background-repeat: no-repeat;"></i><span>Grænse</span><br>';
         
         
       
