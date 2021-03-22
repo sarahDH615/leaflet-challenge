@@ -59,19 +59,22 @@ function createMap(earthquakeData) {
         .addTo(myMap);  
     });
     // adding legend
+    var legend_dict = {             
+        '-10 - 10': '#00ffbf',
+        '10 - 30': '#00ffff',
+        '30 - 50': '#00bfff',
+        '50 - 70': '#0080ff',
+        '70 - 90': '#0040ff',
+        '90+': '#4000ff'
+    };
     var legend = L.control({position: 'bottomleft'});
-    legend.onAdd = function(myMap) {
+    legend.onAdd = function(myMap) { 
         var div = L.DomUtil.create("div", "legend");
         div.innerHTML += "<h4>Earthquake Depth (km)</h4>";
-        div.innerHTML += '<i style="background: #00ffbf"></i><span>-10 - 10</span><br>';
-        div.innerHTML += '<i style="background: #00ffff"></i><span>10 - 30</span><br>';
-        div.innerHTML += '<i style="background: #00bfff"></i><span>30 - 50</span><br>';
-        div.innerHTML += '<i style="background: #0080ff"></i><span>50 - 70</span><br>';
-        div.innerHTML += '<i style="background: #0040ff"></i><span>70 - 90</span><br>';
-        div.innerHTML += '<i style="background: #4000ff"></i><span>90+</span><br>';
+        Object.keys(legend_dict).forEach(k => {
+            return div.innerHTML += `<i style="background: ${legend_dict[k]}"></i><span>${k}</span><br>`;
+        });
         
-        
-      
         return div;
       };
       
