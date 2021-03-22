@@ -27,7 +27,7 @@ function createMap(earthquakeData) {
             49.2827, -123.1207
         ],
         zoom: 4
-      });
+    });
 
     // add tile layer
     L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -41,12 +41,18 @@ function createMap(earthquakeData) {
 
     // add circles for each earthquake point
     earthquakeData.forEach(function(feature) {
+        // determines placement of circles
         var coords = feature.geometry.coordinates;
+        // determines colour
+        var depth = coords[2];
+        // determines radius
         var mag = feature.properties.mag;
+        // elements in the popups
+        var magType = feature.properties.magType;
         var place = feature.properties.place;
         var time = feature.properties.time;
         var url = feature.properties.url
-        var depth = coords[2];
+        
         L.circle([coords[1], coords[0]], {
             color: "black",
             weight: 1,
@@ -54,7 +60,7 @@ function createMap(earthquakeData) {
             fillOpacity: 0.75,
             radius: makeRadius(mag),
         }).bindPopup(
-            "<h3>Earthquake at " + Date(time) + "</h3><hr><h3>Located " + place + "</h3><nl><h3>Magnitude: " + mag + "</h3><nl><h3><a target='_blank' rel='noopener noreferrer' href='" + url + "'</a>Learn More</h3>"
+            `<h3>Earthquake at ${Date(time)}</h3><hr><h3>Located ${place}</h3><nl><h3>Magnitude: ${mag} ${magType}</h3><nl><h3>Depth: ${depth} km</h3><nl><h3><a target='_blank' rel='noopener noreferrer' href='${url}'</a>Learn More</h3>`
         )
         .addTo(myMap);  
     });
@@ -76,9 +82,9 @@ function createMap(earthquakeData) {
         });
         
         return div;
-      };
+    };
       
-      legend.addTo(myMap);
+    legend.addTo(myMap);
 };
 
 
@@ -86,10 +92,7 @@ function createMap(earthquakeData) {
 var path = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson'
 
 d3.json(path, function(data) {
-    // console.log(data);
     var features = data.features;
+    // calling the function to make the map
     createMap(features);
-    // console.log(features);
-    // metadata components: features.properties
-    // useful ones mag, place, alert?, time (needs conversion to human time), url (links to other maps by usgs)
 });
