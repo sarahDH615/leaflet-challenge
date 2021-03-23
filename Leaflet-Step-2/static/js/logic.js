@@ -19,43 +19,41 @@ function colourCreator(depth) {
 };
 
 
-//     // add circles for each earthquake point
-//     earthquakeData.forEach(function(feature) {
-//         // determines placement of circles
-//         var coords = feature.geometry.coordinates;
-//         // determines colour
-//         var depth = coords[2];
-//         // determines radius
-//         var mag = feature.properties.mag;
-//         // elements in the popups
-//         var magType = feature.properties.magType;
-//         var place = feature.properties.place;
-//         var time = feature.properties.time;
-//         var url = feature.properties.url
-        
-//         L.circle([coords[1], coords[0]], {
-            // color: "black",
-            // weight: 1,
-            // fillColor: colourCreator(depth),
-            // fillOpacity: 0.75,
-            // radius: makeRadius(mag),
-//         }).bindPopup(
-//             `<h3>Earthquake at ${Date(time)}</h3><hr><h3>Located ${place}</h3><nl><h3>Magnitude: ${mag} ${magType}</h3><nl><h3>Depth: ${depth} km</h3><nl><h3><a target='_blank' rel='noopener noreferrer' href='${url}'</a>Learn More</h3>`
-//         )
-//         .addTo(myMap);  
-//     });
-    
-// };
-
-
 // reading in data
-var path = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson';
+var path1 = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson';
+var path2 = 'static/data/PB2002_plates.json'
+// d3.json(path2, function(data) {
+//     console.log(data);
+// });
 
-// pass dadta to createFeatures
-d3.json(path, function(data) {
-    var features = data.features;
-    createFeatures(features);
-});
+d3.json(path1, function(error1, data1){
+    d3.json(path2, function(error2, data2) {
+        var tec_features = data2.features;
+        var eq_features = data1.features;
+        console.log(tec_features);
+        console.log(eq_features);
+        createFeatures(eq_features);
+    })
+})
+// var promises = [
+//     d3.json(path1),
+//     d3.json(path2)
+// ];
+
+// Promise.all(promises).then(result => {
+//     // var features = data1.features;
+//     // createFeatures(features)
+//     // console.log(data);
+//     // console.log(data[0].features);
+//     // console.log(data[1].features);
+//     Promise.all(result.map(v => v.json()))
+// }).then(result => {... result[0, 1]});
+
+// pass data to createFeatures
+// d3.json(path, function(data) {
+//     var features = data.features;
+//     createFeatures(features);
+// });
 
 function createFeatures(earthquakeData) {
   
