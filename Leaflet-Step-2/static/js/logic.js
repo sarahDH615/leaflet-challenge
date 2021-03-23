@@ -21,50 +21,45 @@ function colourCreator(depth) {
 
 // reading in data
 var path1 = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson';
-var path2 = 'static/data/PB2002_plates.json'
-// d3.json(path2, function(data) {
-//     console.log(data);
-// });
+var path2 = 'static/data/PB2002_boundaries.json'
 
 d3.json(path1, function(error1, data1){
     d3.json(path2, function(error2, data2) {
         var tec_features = data2.features;
         var eq_features = data1.features;
-        console.log(tec_features);
-        console.log(eq_features);
-        createFeatures(eq_features);
+        // console.log(tec_features);
+        // console.log(eq_features);
+        createFeatures(eq_features, tec_features);
     })
-})
-// var promises = [
-//     d3.json(path1),
-//     d3.json(path2)
-// ];
+});
 
-// Promise.all(promises).then(result => {
-//     // var features = data1.features;
-//     // createFeatures(features)
-//     // console.log(data);
-//     // console.log(data[0].features);
-//     // console.log(data[1].features);
-//     Promise.all(result.map(v => v.json()))
-// }).then(result => {... result[0, 1]});
 
-// pass data to createFeatures
-// d3.json(path, function(data) {
-//     var features = data.features;
-//     createFeatures(features);
-// });
+function createFeatures(earthquakeData, tectonicData) {
+    // creating the plates layer
+    // ---------------------------------------------------------
+    // extracting the coordinates and types from the plate data
+    var myLines = tectonicData.map(d => d.geometry);
+    // defining the style of the lines
+    var myStyle = {
+        'color': 'orange',
+        'weight': 5,
+        'opacity': 0.75
+    };
+    // using myLines and myStyle to create a geoJSON obj
+    var plates = L.geoJSON(myLines, {
+        style:myStyle
+    });
 
-function createFeatures(earthquakeData) {
-  
+    // creating the circles layer
+    // ---------------------------------------------------------
+    // function for adding a popup to each circle with date, place, magnitude, depth, and link to usgs further info
     function onEachFeature(feature, layer) {
         layer.bindPopup(`<h3>Earthquake at ${Date(feature.properties.time)}</h3><hr><h3>Located ${feature.properties.place}</h3><nl><h3>Magnitude: ${feature.properties.mag} ${feature.properties.magType}</h3><nl><h3>Depth: ${feature.geometry.coordinates[2]} km</h3><nl><h3><a target='_blank' rel='noopener noreferrer' href='${feature.properties.url}'</a>Learn More</h3>`);
     }
 
-    // Create a GeoJSON layer containing the features array on the earthquakeData object
-    // Run the onEachFeature function once for each piece of data in the array
-    var earthquakes = L.geoJSON(earthquakeData, {
-        
+    // function that creates circles from each data point, dependant on magnitude and depth
+    // also runs the on each feature function on each data point
+    var earthquakes = L.geoJSON(earthquakeData, { 
         pointToLayer: function(feature, latlng) {
             var rad = makeRadius(feature.properties.mag);
             // console.log(rad);
@@ -83,13 +78,14 @@ function createFeatures(earthquakeData) {
         onEachFeature: onEachFeature
     });
 
-    // Sending our earthquakes layer to the createMap function
-    createMap(earthquakes);
-}
+    // sending layers to the createMap funct
+    createMap(earthquakes, plates);
+};
 
-function createMap(earthquakes) {
+function createMap(earthquakes,plates) {
 
-  // Define streetmap and darkmap layers
+  // base layers
+    // streetmap
     var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
         tileSize: 512,
@@ -98,7 +94,7 @@ function createMap(earthquakes) {
         id: "mapbox/streets-v11",
         accessToken: API_KEY
     });
-
+    // darkmap
     var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
         maxZoom: 18,
@@ -106,24 +102,25 @@ function createMap(earthquakes) {
         accessToken: API_KEY
     });
 
-    // Define a baseMaps object to hold our base layers
+    // baseMaps object to hold base layers
     var baseMaps = {
         "Street Map": streetmap,
         "Dark Map": darkmap
     };
 
-    // Create overlay object to hold our overlay layer
+    // overlay object to hold overlay layer
     var overlayMaps = {
-        Earthquakes: earthquakes
+        'Earthquakes': earthquakes,
+        'Tectonic Plates': plates
     };
 
-    // Create our map, giving it the streetmap and earthquakes layers to display on load
+    // create map, displaying streetmap and both overlays on load
     var myMap = L.map("mapid", {
         center: [
             49.2827, -123.1207
         ],
         zoom: 4,
-        layers: [streetmap, earthquakes]
+        layers: [streetmap, plates, earthquakes]
     });
 
     // adding legend
@@ -148,9 +145,7 @@ function createMap(earthquakes) {
    
     legend.addTo(myMap);
 
-    // Create a layer control
-    // Pass in our baseMaps and overlayMaps
-    // Add the layer control to the map
+    // layer control to flip between layers
     L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(myMap);
