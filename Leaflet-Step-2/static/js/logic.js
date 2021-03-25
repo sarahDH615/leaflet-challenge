@@ -18,21 +18,7 @@ function colourCreator(depth) {
     } else {return '#4000ff'}
 };
 
-
-// reading in data
-var path1 = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson';
-var path2 = 'static/data/PB2002_boundaries.json'
-
-d3.json(path1, function(error1, data1){
-    d3.json(path2, function(error2, data2) {
-        var tec_features = data2.features;
-        var eq_features = data1.features;
-        
-        createFeatures(eq_features, tec_features);
-    })
-});
-
-
+// function to create the overlay layers (earthquakes and tectonic plates)
 function createFeatures(earthquakeData, tectonicData) {
     // creating the plates layer
     // ---------------------------------------------------------
@@ -83,8 +69,8 @@ function createFeatures(earthquakeData, tectonicData) {
     createMap(earthquakes, plates);
 };
 
+// function to create the map with base and overlay layers, legend, and control to flip between layers
 function createMap(earthquakes,plates) {
-
   // base layers
     // streetmap
     var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -164,4 +150,17 @@ function createMap(earthquakes,plates) {
     L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(myMap);
-}
+};
+
+// reading in data
+var path1 = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_month.geojson';
+var path2 = 'static/data/PB2002_boundaries.json'
+
+d3.json(path1, function(error1, data1){
+    d3.json(path2, function(error2, data2) {
+        var tec_features = data2.features;
+        var eq_features = data1.features;
+        
+        createFeatures(eq_features, tec_features);
+    });
+});
