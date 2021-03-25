@@ -6,16 +6,16 @@ function makeRadius(magnitude) {
 // circle colour
 function colourCreator(depth) {
     if (depth < 10 ) {
-        return '#00ffbf'
+        return '#00ffbf';
     } else if (depth < 30) {
-        return '#00ffff'
+        return '#00ffff';
     } else if (depth < 50) {
-        return '#00bfff'
+        return '#00bfff';
     } else if (depth < 70) {
-        return '#0080ff'
+        return '#0080ff';
     } else if (depth < 90) {
-        return '#0040ff'
-    } else {return '#4000ff'}
+        return '#0040ff';
+    } else {return '#4000ff';}
 }
 
 // map creation
@@ -65,6 +65,7 @@ function createMap(earthquakeData) {
         .addTo(myMap);  
     });
     // adding legend
+    // dict to hold legend info
     var legend_dict = {             
         '-10 - 10': '#00ffbf',
         '10 - 30': '#00ffff',
@@ -77,6 +78,7 @@ function createMap(earthquakeData) {
     legend.onAdd = function(myMap) { 
         var div = L.DomUtil.create("div", "legend");
         div.innerHTML += "<h4>Earthquake Depth (km)</h4>";
+        // create coloured circles and categs in the legend div
         Object.keys(legend_dict).forEach(k => {
             return div.innerHTML += `<i style="background: ${legend_dict[k]}"></i><span>${k}</span><br>`;
         });
