@@ -4,26 +4,26 @@
 - Leaflet-Step-1
     - static
         - css
-            - style.css
+            - style.css: styling for the map
         - js
-            - logic.js
-    - index.html
+            - logic.js: JavaScript file for processing data and building the map
+    - index.html: HTML page to display the visualisation
 - Leaflet-Step-2
     - static
         - css
-            - style.css
+            - style.css: styling for the map
         - js
-            - logic.js
+            - logic.js: JavaScript file for processing data and building the map
         - data
-            - PB2002_boundaries.json
-    - index.html
+            - PB2002_boundaries.json: JSON file containing the tectonic plate location data
+    - index.html: HTML page to display the visualisation
 
 ### description
 
 This project's goal was to present data from the USGS (United States Geological Survey) on global earthquakes greater than magnitude 1, over the last 30 days from 22 March 2021. The representation would be done twice: once as circle markers over a Mapbox street map (step 1), and the second time as circle markers over a choice of Mapbox maps, alongside tectonic plate data (step 2). 
 The following steps were taken to achieve these displays:
 - Step 1: Earthquake Visualisation
-    - read in data using d3.json()
+    - read in data from a URL using d3.json()
     - plot each earthquake as a circle marker over a street map
         - process the data for mapping
             - make radius size of circles dependant on earthquake magnitude
@@ -35,7 +35,7 @@ The following steps were taken to achieve these displays:
             - conducts a for loop on each point in the earthquake data, extracts coordinates, magnitude, depth, and time, amongst other information, and uses makeRadius() and colourCreator() to append a circle, and bind a popup containing the point information
             - adds a legend containing the colour and depth range for each depth category
 - Step 2: Earthquake and Tectonic Plate Visualisations
-    - read in earthquake and tectonic using two nested d3.json() calls
+    - read in earthquake and tectonic using two nested d3.json() calls, one to a URL, the other to a local file
     - plot each earthquake as a circle marker, and plates as lines, over a choice of street, dark, or satellite maps
         - process the data for mapping
             - make radius size of circles dependant on earthquake magnitude
