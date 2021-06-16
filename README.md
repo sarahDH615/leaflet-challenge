@@ -68,7 +68,7 @@ Upon looking at the step two map, it can be seen that many of the earthquakes fo
 
 <p align="center" width="100%">
     <img width="40%" src="/images/africanCoast.png" alt='African coast limited earthquake activity'> 
-    <img width="40%" src="/images/southAmericanCoast.png" alt='South American coast plentiful earthquake activity'> 
+    <img width="40%" height="80%" src="/images/southAmericanCoast.png" alt='South American coast plentiful earthquake activity'> 
 </p>
 
 *Compare the relatively limited amount of earthquakes along the African coast (left) to the more numerous earthquakes along the South American coast (right), despite both lying on tectonic plate edges.*
