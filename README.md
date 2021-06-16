@@ -21,7 +21,7 @@ _Step 2_
         - js
             - logic.js: JavaScript file for processing data and building the map
         - data
-            - PB2002_boundaries.json: JSON file containing the tectonic plate location data
+            - PB1502_boundaries.json: JSON file containing the tectonic plate location data
     - index.html: HTML page to display the visualisation
 
 ### description
@@ -63,15 +63,15 @@ The following steps were taken to achieve these displays:
 One of the difficulties in this project was properly processing the original data for display. In step one, making the earthquake datapoints large enough to be visible required multiplication by 10,000. In step two, the same multiplication factor resulted in one datapoint circle filling the whole screen. This difference occurred because step one used L.circles() to make a circle layer, whilst step two used L.CircleMarker(). The first has a simpler procedure, but requires a slightly larger amount of preprocessing (the multiplication factor); this simpler procedure fits well with the simpler goal of one data layer on a map, and so was implemented in step one. The second method, L.CircleMarker(), works with pointToLayer and L.geoJSON(), and has a bit more complex syntax, but allows for circles that are visible without a multiplication factor (one was used here to make them just a bit more visible). It was used in step two because two geoJSON() layers were required.
 
 <p align="center" width="100%">
-    <img width="350" height="200" src="/images/level1radius.png" alt='Level 1 radius creation with multiplication factor 10,000'> 
-    <img width="350" height="200" src="/images/level2radius.png" alt='Level 2 radius creation with multiplication factor 2'> 
+    <img width="350" height="150" src="/images/level1radius.png" alt='Level 1 radius creation with multiplication factor 10,000'> 
+    <img width="350" height="150" src="/images/level2radius.png" alt='Level 2 radius creation with multiplication factor 2'> 
 </p>
 
 *Multiplication Factors for Step 1 (left) and Step 2 (right).*
 
 <p align="center" width="100%">
     <img width="350" height="500" src="/images/LcircleLevel1.png" alt='Use of L.circle() for Level 1'> 
-    <img width="400" height="500" src="/images/circleMarkerLevel2.png" alt='Use of L.CircleMarker() for Level 2'> 
+    <img width="450" height="500" src="/images/circleMarkerLevel2.png" alt='Use of L.CircleMarker() for Level 2'> 
 </p>
 
 *Creation of Circles for Step 1 (left) and Step 2 (right).*
