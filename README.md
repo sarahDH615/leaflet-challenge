@@ -62,8 +62,26 @@ The following steps were taken to achieve these displays:
 
 One of the difficulties in this project was properly processing the original data for display. In step one, making the earthquake datapoints large enough to be visible required multiplication by 10,000. In step two, the same multiplication factor resulted in one datapoint circle filling the whole screen. This difference occurred because step one used L.circles() to make a circle layer, whilst step two used L.CircleMarker(). The first has a simpler procedure, but requires a slightly larger amount of preprocessing (the multiplication factor); this simpler procedure fits well with the simpler goal of one data layer on a map, and so was implemented in step one. The second method, L.CircleMarker(), works with pointToLayer and L.geoJSON(), and has a bit more complex syntax, but allows for circles that are visible without a multiplication factor (one was used here to make them just a bit more visible). It was used in step two because two geoJSON() layers were required.
 
+<p align="center" width="100%">
+    <img width="350" height="300" src="/images/level1radius.png" alt='Level 1 radius creation with high multiplication factor'> 
+    <img width="350" height="300" src="/images/level2radius.png" alt='Level 2 radius creation with low multiplication factor'> 
+</p>
+
+*Multiplication Factors for Step 1 (left) and Step 2 (right).*
+
+<p align="center" width="100%">
+    <img width="350" height="500" src="/images/LcircleLevel1.png" alt='Use of L.circle() for Level 1'> 
+    <img width="350" height="500" src="/images/circleMarkerLevel2.png" alt='Use of L.CircleMarker() for Level 2'> 
+</p>
+
+*Creation of Circles for Step 1 (left) and Step 2 (right).*
+
+
 Another challenging aspect was adjusting the code from step one to step two to read in two datasets at once. The two datasets (earthquake data and tectonic plate locations) had to be read in together so that they could be sent to the same functions together and be put on the same map. Initially Promise.all() was considered for doing this task, but eventually using nested calls to d3.json() were decided upon for its simpler syntax. 
-![Nested Calls to D3.json()](/images/nestedDataRead.png)
+
+<p align="center" width="100%">
+    <img width="80%" src="/images/nestedDataRead.png" alt='Nested Calls to D3.json()'> 
+</p>
 
 Upon looking at the step two map, it can be seen that many of the earthquakes follow plate lines. This seems sensible, as shifts in plates would presumably cause tremours at plate edges. However, some other factors do seem to be at play. Plate edges alone do not explain why so many earthquakes were located off the western Canadian, western South American, and eastern Japanese coasts, as opposed to other coasts that lie along plate boundaries. Furthermore, there seems to be a cluster of earthquakes near Hawai'i, and one in the Artic, where there does not seem to be major tectonic plate edges. Finding and plotting these additional factors contributing to these earthquakes could be an interesting addition to this map. 
 
