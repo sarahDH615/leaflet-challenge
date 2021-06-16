@@ -69,6 +69,7 @@ One of the difficulties in this project was properly processing the original dat
 
 *Multiplication Factors for Step 1 (left) and Step 2 (right).*
 
+
 <p align="center" width="100%">
     <img width="350" height="500" src="/images/LcircleLevel1.png" alt='Use of L.circle() for Level 1'> 
     <img width="450" height="500" src="/images/circleMarkerLevel2.png" alt='Use of L.CircleMarker() for Level 2'> 
