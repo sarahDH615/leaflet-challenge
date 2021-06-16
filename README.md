@@ -67,8 +67,8 @@ Another challenging aspect was adjusting the code from step one to step two to r
 Upon looking at the step two map, it can be seen that many of the earthquakes follow plate lines. This seems sensible, as shifts in plates would presumably cause tremours at plate edges. However, some other factors do seem to be at play. Plate edges alone do not explain why so many earthquakes were located off the western Canadian, western South American, and eastern Japanese coasts, as opposed to other coasts that lie along plate boundaries. Furthermore, there seems to be a cluster of earthquakes near Hawai'i, and one in the Artic, where there does not seem to be major tectonic plate edges. Finding and plotting these additional factors contributing to these earthquakes could be an interesting addition to this map. 
 
 <p align="center" width="100%">
-    <img width="40%" src="/images/africanCoast.png" alt='African coast limited earthquake activity'> 
-    <img width="40%" height="80%" src="/images/southAmericanCoast.png" alt='South American coast plentiful earthquake activity'> 
+    <img width="400" height="600" src="/images/africanCoast.png" alt='African coast limited earthquake activity'> 
+    <img width="400" height="600" src="/images/southAmericanCoast.png" alt='South American coast plentiful earthquake activity'> 
 </p>
 
 *Compare the relatively limited amount of earthquakes along the African coast (left) to the more numerous earthquakes along the South American coast (right), despite both lying on tectonic plate edges.*
