@@ -1,5 +1,11 @@
 ## leaflet-challenge
 
+_Step 1_
+![Step 1 Map](/images/step1Map.png)
+
+_Step 2_
+![Step 2 Map](/images/step2Map.png)
+
 ### contains
 - Leaflet-Step-1
     - static
