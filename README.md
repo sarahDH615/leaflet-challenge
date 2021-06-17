@@ -1,10 +1,6 @@
 ## leaflet-challenge
 
-_Step 1_
-![Step 1 Map](/images/step1Map.png)
-
-_Step 2_
-![Step 2 Map](/images/step2Map.png)
+![Earthquake](/images/earthquake.png)
 
 ### contains
 - Leaflet-Step-1
@@ -25,6 +21,13 @@ _Step 2_
     - index.html: HTML page to display the visualisation
 
 ### description
+
+
+_Step 1_
+![Step 1 Map](/images/step1Map.png)
+
+_Step 2_
+![Step 2 Map](/images/step2Map.png)
 
 This project's goal was to present data from the USGS (United States Geological Survey) on global earthquakes greater than magnitude 1, over the last 30 days from 22 March 2021. The representation would be done twice: once as circle markers over a Mapbox street map (step 1), and the second time as circle markers over a choice of Mapbox maps, alongside tectonic plate data (step 2). 
 The following steps were taken to achieve these displays:
