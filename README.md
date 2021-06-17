@@ -1,6 +1,6 @@
 ## leaflet-challenge
 
-![Earthquake](/images/earthquake.png)
+![Earthquake](/images/earthquake.jpg)
 
 ### contains
 - Leaflet-Step-1
